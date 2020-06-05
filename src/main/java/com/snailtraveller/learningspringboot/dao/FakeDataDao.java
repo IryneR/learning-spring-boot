@@ -1,9 +1,11 @@
 package com.snailtraveller.learningspringboot.dao;
 
 import com.snailtraveller.learningspringboot.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class FakeDataDao implements UserDao{
 
     private static Map<UUID, User> database;
@@ -15,23 +17,23 @@ public class FakeDataDao implements UserDao{
         database.put(joeUserUid, joe);
     }
     @Override
-    public List<User> getAllUsers() {
+    public List<User> selectAllUsers() {
         return new ArrayList<>(database.values());
     }
 
     @Override
-    public User getUser(UUID userUid) {
-        return database.get(userUid);
+    public Optional<User> selectUserByUserUid(UUID userUid) {
+        return Optional.ofNullable(database.get(userUid));
     }
 
     @Override
-    public int updateUser(UUID userUid, User user) {
-        database.put(userUid, user);
+    public int updateUser( User user) {
+        database.put(user.getUserUid(), user);
         return 1;
     }
 
     @Override
-    public int removeUser(UUID userUid) {
+    public int deleteUserByUserUid(UUID userUid) {
         database.remove(userUid);
         return 1;
     }
