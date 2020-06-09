@@ -3,7 +3,7 @@ package com.snailtraveller.learningspringboot.model;
 import java.util.UUID;
 
 public class User {
-    private final UUID userUid;
+    private  UUID userUid;
     private final String firstName;
     private final String lastName;
     private final Gender gender;
@@ -28,6 +28,10 @@ public class User {
         return userUid;
     }
 
+    public void setUserUid (UUID userUid) {
+        this.userUid = userUid;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -47,6 +51,7 @@ public class User {
     public String getEmail() {
         return email;
     }
+
 
     @Override
     public String toString() {
