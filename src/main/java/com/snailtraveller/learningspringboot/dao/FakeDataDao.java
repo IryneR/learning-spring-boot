@@ -8,14 +8,15 @@ import java.util.*;
 @Repository
 public class FakeDataDao implements UserDao{
 
-    private static Map<UUID, User> database;
+    private  Map<UUID, User> database;
 
-    static {
+    public FakeDataDao() {
         database = new HashMap<>();
         UUID joeUserUid = UUID.randomUUID();
         User joe = new User(joeUserUid,"joe","jona", User.Gender.MALE,22,"joe@gmail.com");
         database.put(joeUserUid, joe);
     }
+
     @Override
     public List<User> selectAllUsers() {
         return new ArrayList<>(database.values());
@@ -23,6 +24,7 @@ public class FakeDataDao implements UserDao{
 
     @Override
     public Optional<User> selectUserByUserUid(UUID userUid) {
+
         return Optional.ofNullable(database.get(userUid));
     }
 
