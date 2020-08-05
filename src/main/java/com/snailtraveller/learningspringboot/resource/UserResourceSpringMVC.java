@@ -13,15 +13,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
+/*@RestController
 @RequestMapping(
         path = "/api/v1/users"
-)
-public class UserResource {
+)*/
+public class UserResourceSpringMVC {
     private UserService userService;
 
     @Autowired
-    public UserResource(UserService userService) {
+    public UserResourceSpringMVC(UserService userService) {
         this.userService = userService;
     }
 
