@@ -1,24 +1,30 @@
 package com.snailtraveller.learningspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class User {
-    private  UUID userUid;
-    private String firstName;
-    private  String lastName;
-    private  Gender gender;
-    private  Integer age;
-    private  String email;
+    private final UUID userUid;
+    private final String firstName;
+    private final String lastName;
+    private final Gender gender;
+    private final Integer age;
+    private final String email;
 
     public  enum Gender{
         MALE,
         FEMALE
     }
 
-    public User() {
-    }
-
-    public User(UUID userUid, String firstName, String lastName, Gender gender, Integer age, String email) {
+    public User(
+            @JsonProperty("userUid") UUID userUid,
+            @JsonProperty("firstName") String firstName,
+            @JsonProperty("lastName") String lastName,
+            @JsonProperty("gender") Gender gender,
+            @JsonProperty("age") Integer age,
+            @JsonProperty("email") String email) {
         this.userUid = userUid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,18 +33,16 @@ public class User {
         this.email = email;
     }
 
+    @JsonProperty("id")
     public UUID getUserUid() {
         return userUid;
     }
 
-    public void setUserUid (UUID userUid) {
-        this.userUid = userUid;
-    }
-
+   //@JsonIgnore
     public String getFirstName() {
         return firstName;
     }
-
+    //@JsonIgnore
     public String getLastName() {
         return lastName;
     }
@@ -55,6 +59,17 @@ public class User {
         return email;
     }
 
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+
+    public LocalDate getDateOfBirth(){
+       return LocalDate.now().minusYears(age);
+    }
+
+    public static User newUser(UUID userUid, User user){
+        return new User(userUid,user.getFirstName(), user.getLastName(), user.getGender(), user.getAge(), user.getEmail());
+    }
 
     @Override
     public String toString() {
