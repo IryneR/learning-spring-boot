@@ -3,16 +3,32 @@ package com.snailtraveller.learningspringboot.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true) // to ignore fullName and date of birth
 public class User {
     private final UUID userUid;
+    @NotNull
     private final String firstName;
+
+    @NotNull
     private final String lastName;
+
+    @NotNull
     private final Gender gender;
+
+    @NotNull
+    @Max(120)
+    @Min(0)
     private final Integer age;
+
+    @NotNull
+    @Email
     private final String email;
 
     public  enum Gender{

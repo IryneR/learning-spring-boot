@@ -5,11 +5,10 @@ import com.snailtraveller.learningspringboot.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.requireNonNull;
 
 @Service
 public class UserService {
@@ -62,6 +61,16 @@ public class UserService {
 
     public int insertUser(User user) {
     UUID userUid = user.getUserUid() == null ? UUID.randomUUID() : user.getUserUid();
+    //validateUser(user);
         return userDao.insertUser(userUid,User.newUser(userUid,user));
+    }
+
+    private void validateUser(User user){
+        requireNonNull(user.getFirstName(), "First name required");
+        requireNonNull(user.getLastName(), "Last name required");
+        requireNonNull(user.getAge(), "Age required");
+        requireNonNull(user.getGender(), "Gender required");
+        requireNonNull(user.getEmail(), "Email required");
+        //validate the email
     }
 }

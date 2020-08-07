@@ -4,6 +4,9 @@ import com.snailtraveller.learningspringboot.model.User;
 import com.snailtraveller.learningspringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -11,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Validated
 @Component
 @Path("api/v1/users")
 public class UserResourceResteasy {
@@ -44,7 +48,7 @@ public class UserResourceResteasy {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-        public Response insertNewUser( User user) {
+        public Response insertNewUser(@Valid User user) {
         int result = userService.insertUser(user);
         return getIntegerResponceEntity(result);
     }
