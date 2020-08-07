@@ -5,6 +5,7 @@ import com.snailtraveller.learningspringboot.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.NotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,16 +48,15 @@ public class UserService {
         if(optionalUser.isPresent()){
            return userDao.updateUser( user);
         }
-        return -1;
+        throw new NotFoundException("user " + user.getUserUid() + " not found");
     }
 
 
-    public int removeUser(UUID userUid) {
-        Optional<User> optionalUser = getUser(userUid);
-        if(optionalUser.isPresent()){
+    public int removeUser(UUID uid) {
+        UUID userUid = getUser(uid)
+                .map(User::getUserUid)
+                .orElseThrow(() -> new NotFoundException("user " + uid + " not found"));
             return  userDao.deleteUserByUserUid(userUid);
-        }
-        return -1;
     }
 
     public int insertUser(User user) {
@@ -65,12 +65,12 @@ public class UserService {
         return userDao.insertUser(userUid,User.newUser(userUid,user));
     }
 
-    private void validateUser(User user){
+   /* private void validateUser(User user){
         requireNonNull(user.getFirstName(), "First name required");
         requireNonNull(user.getLastName(), "Last name required");
         requireNonNull(user.getAge(), "Age required");
         requireNonNull(user.getGender(), "Gender required");
         requireNonNull(user.getEmail(), "Email required");
         //validate the email
-    }
+    }*/
 }
